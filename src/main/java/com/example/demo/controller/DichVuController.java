@@ -52,4 +52,9 @@ public class DichVuController {
         return "redirect:/dich-vu/hien-thi";
     }
 
+    @GetMapping("test")
+    public String tesst(Model model){
+        return  "";
+    }
+
 }
