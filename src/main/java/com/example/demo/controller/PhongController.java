@@ -62,9 +62,16 @@ public class PhongController {
         return "phong/index";
     }
 
+//    @GetMapping("paging")
+//    public String phanTrang(@RequestParam(defaultValue = "0") Integer page , Model model){
+//        Page<Phong> phongPage = phongRepository.findAll(PageRequest.of(page,5));
+//        model.addAttribute("listP", phongPage.getContent());
+//        model.addAttribute("listLP", this.loaiPhongRepository.findAll());
+//        return "phong/index";
+//    }
     @GetMapping("paging")
-    public String phanTrang(@RequestParam(defaultValue = "0") Integer page , Model model){
-        Page<Phong> phongPage = phongRepository.findAll(PageRequest.of(page,5));
+    public String phanTrangg(Model model , @RequestParam(defaultValue = "0") Integer page){
+        Page<Phong> phongPage  = phongRepository.findAll(PageRequest.of(page,5));
         model.addAttribute("listP", phongPage.getContent());
         model.addAttribute("listLP", this.loaiPhongRepository.findAll());
         return "phong/index";
