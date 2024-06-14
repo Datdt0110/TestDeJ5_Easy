@@ -52,11 +52,6 @@ public class DichVuController {
         return "redirect:/dich-vu/hien-thi";
     }
 
-    @PostMapping("update/{id}")
-    public String updatee(@PathVariable Integer id, @ModelAttribute DichVu dichVu) {
-        dichVu.setId(id); // Đảm bảo đối tượng có ID chính xác để cập nhật
-        dichVuRepository.save(dichVu);
-        return "redirect:/dich-vu/hien-thi";
-    }
+
 
 }

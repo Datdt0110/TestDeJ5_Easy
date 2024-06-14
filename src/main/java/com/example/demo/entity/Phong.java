@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="phong")
+@Table(name = "phong")
 
 public class Phong {
     @Id
@@ -21,12 +22,19 @@ public class Phong {
     @ManyToOne
     @JoinColumn(name = "id_loai_phong")
     private LoaiPhong loaiPhong;
-    @Column(name = "ghi_chu")
-    private String ghiChu;
-    @Column(name = "so_luong_phong")
-    private String soLuong;
     @Column(name = "ten_phong")
+    @NotBlank(message = "Không được để trống tên phòng")
     private String tenPhong;
+
+    @Column(name = "so_luong_phong")
+    @NotBlank(message = "Không được để trống số lượng")
+    private String soLuong;
     @Column(name = "trang_thai")
     private String trangThai;
+
+    @Column(name = "ghi_chu")
+    @NotBlank(message = "Không được để trống ghi chú")
+    private String ghiChu;
+
+
 }

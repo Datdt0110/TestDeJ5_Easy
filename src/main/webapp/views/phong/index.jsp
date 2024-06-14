@@ -22,41 +22,55 @@
     <form action="/phong/add" method="POST" class="mb-5">
         <input type="hidden" name="id" value="${phong != null ? phong.id : ''}">
         <div class="row">
-        <div class="col-md-6">
-        <div class="form-group">
-            <label for="tenPhong">Tên Phòng</label>
-            <input type="text" class="form-control" id="tenPhong" name="tenPhong" value="${phong != null ? phong.tenPhong : ''}" >
-        </div>
-            <div class="form-group">
-                <label >Trạng Thái</label><br>
-                <input type="radio" id="active" name="trangThai" value="Còn Phòng" ${phong != null && phong.trangThai == 'Còn Phòng' ? 'checked' : ''}>
-                <label>Còn Phòng</label><br>
-                <input type="radio" id="inactive" name="trangThai" value="Hết Phòng" ${phong != null && phong.trangThai == 'Hết Phòng' ? 'checked' : ''}>
-                <label >Hết Phòng</label>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tenPhong">Tên Phòng</label>
+                    <input type="text" class="form-control" id="tenPhong" name="tenPhong"
+                           value="${phong != null ? phong.tenPhong : ''}">
+                    <c:if test="${not empty errors['tenPhong']}">
+                        <div class="alert alert-danger mt-2">${errors['tenPhong']}</div>
+                    </c:if>
+                </div>
+                <div class="form-group">
+                    <label>Trạng Thái</label><br>
+                    <input type="radio" id="active" name="trangThai"
+                           value="Còn Phòng" ${phong != null && phong.trangThai == 'Còn Phòng' ? 'checked' : ''}>
+                    <label>Còn Phòng</label><br>
+                    <input type="radio" id="inactive" name="trangThai"
+                           value="Hết Phòng" ${phong != null && phong.trangThai == 'Hết Phòng' ? 'checked' : ''}>
+                    <label>Hết Phòng</label>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="soLuong">Số Lượng Phòng</label>
+                    <input type="number" class="form-control" id="soLuong" name="soLuong"
+                           value="${phong != null ? phong.soLuong : ''}">
+                    <c:if test="${not empty errors['soLuong']}">
+                        <div class="alert alert-danger mt-2">${errors['soLuong']}</div>
+                    </c:if>
+                </div>
+                <div class="form-group">
+                    <label for="ghiChu">Ghi chú</label>
+                    <input type="text" class="form-control" id="ghiChu" name="ghiChu"
+                           value="${phong != null ? phong.ghiChu : ''}">
+                    <c:if test="${not empty errors['ghiChu']}">
+                        <div class="alert alert-danger mt-2">${errors['ghiChu']}</div>
+                    </c:if>
+                </div>
             </div>
 
-        </div>
-        <div class="col-md-6">
-
             <div class="form-group">
-                <label for="soLuong">Số Lượng Phòng</label>
-                <input type="number" class="form-control" id="soLuong" name="soLuong"  value="${phong != null ? phong.soLuong : ''}">
+                <label for="loaiPhong">Tên Loại Phòng</label>
+                <select class="form-control" id="loaiPhong" name="loaiPhong">
+                    <!-- Thêm các tùy chọn loại phòng ở đây -->
+                    <c:forEach var="lp" items="${listLP}">
+                        <option value="${lp.id}" ${phong != null && phong.loaiPhong.id == lp.id ? 'selected' : ''}>${lp.ten}</option>
+                    </c:forEach>
+                </select>
             </div>
-        <div class="form-group">
-            <label for="ghiChu">Ghi chú</label>
-            <input type="text" class="form-control" id="ghiChu" name="ghiChu" value="${phong != null ? phong.ghiChu : ''}">
-        </div>
-        </div>
-
-        <div class="form-group">
-            <label for="loaiPhong">Tên Loại Phòng</label>
-            <select class="form-control" id="loaiPhong" name="loaiPhong" >
-                <!-- Thêm các tùy chọn loại phòng ở đây -->
-                <c:forEach var="lp" items="${listLP}">
-                    <option value="${lp.id}" ${phong != null && phong.loaiPhong.id == lp.id ? 'selected' : ''}>${lp.tenLoaiPhong}</option>
-                </c:forEach>
-            </select>
-        </div>
         </div>
 
         <div class="my-3">
@@ -66,25 +80,27 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Tên Phòng</th>
-            <th>Số Lượng Phòng</th>
-            <th>Trạng Thái</th>
-            <th>Ghi chú</th>
-            <th>Tên Loại Phòng</th>
-            <th>Hành động</th>
+            <th>Tên phòng</th>
+            <th>Số lượng phòng</th>
+            <th>Trạng thái</th>
+            <th>ghi Chú</th>
+            <th>Tên loại phòng</th>
+            <th>Hành Động</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="dv" items="${listP}">
+        <c:forEach var="p" items="${listP}">
             <tr>
-                <td>${dv.tenPhong}</td>
-                <td>${dv.soLuong}</td>
-                <td>${dv.trangThai}</td>
-                <td>${dv.ghiChu}</td>
-                <td>${dv.loaiPhong.tenLoaiPhong}</td>
+                <td>${p.tenPhong}</td>
+                <td>${p.soLuong}</td>
+                <td>${p.trangThai}</td>
+                <td>${p.ghiChu}</td>
+                <td>${p.loaiPhong.ten}</td>
                 <td>
-                    <a class="btn btn-dark" href="/phong/detail/${dv.id}" >Detail</a>
+                    <a href="/phong/detail/${p.id}" class="btn btn-success">Detail</a>
                 </td>
+
+
             </tr>
         </c:forEach>
         </tbody>
