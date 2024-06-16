@@ -89,7 +89,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="p" items="${listP}">
+        <c:forEach var="p" items="${pagePhong.content}">
             <tr>
                 <td>${p.tenPhong}</td>
                 <td>${p.soLuong}</td>
@@ -105,7 +105,21 @@
         </c:forEach>
         </tbody>
     </table>
-
+    <ul class="pagination">
+        <c:if test="${pagePhong.totalPages > 1}">
+            <c:if test="${pagePhong.number > 0}">
+                <li class="page-item"><a class="page-link" href="?page=${pagePhong.number - 1}">Previous</a></li>
+            </c:if>
+            <c:forEach begin="0" end="${pagePhong.totalPages - 1}" var="i">
+                <li class="page-item ${i == pagePhong.number ? 'active' : ''}">
+                    <a class="page-link" href="?page=${i}">${i + 1}</a>
+                </li>
+            </c:forEach>
+            <c:if test="${pagePhong.number < pagePhong.totalPages - 1}">
+                <li class="page-item"><a class="page-link" href="?page=${pagePhong.number + 1}">Next</a></li>
+            </c:if>
+        </c:if>
+    </ul>
 
 </div>
 </body>

@@ -29,11 +29,14 @@ public class PhongController {
     private LoaiPhongRepository loaiPhongRepository;
 
     @GetMapping("hien-thi")
-    public String index(Model model) {
-        model.addAttribute("listP", this.phongRepository.findAll());
-        model.addAttribute("listLP", this.loaiPhongRepository.findAll());
+    public String index(Model model, @RequestParam(defaultValue = "0") int page) {
+        PageRequest pageable = PageRequest.of(page, 5);
+        Page<Phong> pagePhong = phongRepository.findAll(pageable);
+        model.addAttribute("pagePhong", pagePhong);
+        model.addAttribute("listLP", loaiPhongRepository.findAll());
         return "phong/index";
     }
+
 
     @PostMapping("add")
     public String addPhong(@Valid @ModelAttribute Phong phong, BindingResult validateResult, Model model) {
@@ -54,7 +57,7 @@ public class PhongController {
     }
 
     @GetMapping("detail/{id}")
-    public String detailPhong( @PathVariable Integer id, Model model){
+    public String detailPhong(@PathVariable Integer id, Model model) {
         Phong phong = phongRepository.findById(id).orElse(null);
         model.addAttribute("phong", phong);
         model.addAttribute("listP", this.phongRepository.findAll());
@@ -62,18 +65,5 @@ public class PhongController {
         return "phong/index";
     }
 
-//    @GetMapping("paging")
-//    public String phanTrang(@RequestParam(defaultValue = "0") Integer page , Model model){
-//        Page<Phong> phongPage = phongRepository.findAll(PageRequest.of(page,5));
-//        model.addAttribute("listP", phongPage.getContent());
-//        model.addAttribute("listLP", this.loaiPhongRepository.findAll());
-//        return "phong/index";
-//    }
-    @GetMapping("paging")
-    public String phanTrangg(Model model , @RequestParam(defaultValue = "0") Integer page){
-        Page<Phong> phongPage  = phongRepository.findAll(PageRequest.of(page,5));
-        model.addAttribute("listP", phongPage.getContent());
-        model.addAttribute("listLP", this.loaiPhongRepository.findAll());
-        return "phong/index";
-    }
+
 }
